@@ -1,0 +1,1 @@
+<p>&copy;2026 Bjorn Van Beek • Deltion College • Concept voor U2 live events.</p>
