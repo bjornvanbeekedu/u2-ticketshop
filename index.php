@@ -21,8 +21,16 @@
             <input type="email" id="mail" name="mail" placeholder="email" required>
             <br><br>
 
-            <label for="ticketAmount">Aantal tickets: </label><br>
-            <input type="number" id="ticketAmount" name="ticketAmount" placeholder="aantal" min="1" max="5" required>
+            <!-- kiezen tussen een normaal ticket of een VIP ticket -->
+            <label for="ticketSoort">Soort ticket: </label><br>
+            <select id="ticketSoort" name="ticketSoort">
+                <option value="normaal">Normaal ticket - &euro;85</option>
+                <option value="vip">VIP ticket - &euro;150</option>
+            </select>
+            <br><br>
+
+            <label for="ticketAmount">Aantal tickets (maximaal 8): </label><br>
+            <input type="number" id="ticketAmount" name="ticketAmount" placeholder="aantal" min="1" max="8" required>
             <br><br>
 
             <input type="submit" name="submit" value="Bestel Tickets">

@@ -1,8 +1,12 @@
 <?php
 include "includes/functies.php";
 
-// prijs van 1 ticket
-$prijs = 85;
+// prijzen van de tickets
+$normaalPrijs = 85;
+$vipPrijs = 150;
+
+// maximaal aantal tickets per bestelling
+$maxTickets = 8;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,22 +21,56 @@ $prijs = 85;
     </header>
 
     <main>
-        <h3>Bedankt voor je aankoop</h3>
-
         <?php
         // kijken of het formulier is ingevuld
-        if (isset($_POST["name"]) && isset($_POST["mail"]) && isset($_POST["ticketAmount"])) {
+        if (isset($_POST["name"]) && isset($_POST["mail"]) && isset($_POST["ticketAmount"]) && isset($_POST["ticketSoort"])) {
 
             // gegevens uit het formulier halen
             $naam = htmlspecialchars($_POST["name"]);
-            $aantal = htmlspecialchars($_POST["ticketAmount"]);
+            $email = $_POST["mail"];
+            $aantal = (int) $_POST["ticketAmount"];
+            $soort = $_POST["ticketSoort"];
 
-            // totaalprijs uitrekenen met de functie
-            $totaal = berekenTotaal($aantal, $prijs);
+            // hier komen de foutmeldingen in
+            $fout = "";
 
-            echo "<p>" . begroeting($naam) . ", bedankt voor je bestelling van " . $aantal . " tickets voor U2!</p>";
-            echo "<p>Totaal prijs = <b>&euro;" . $totaal . "</b></p>";
-            echo "<hr>";
+            // controle op het e-mailadres
+            if (controleerEmail($email) == false) {
+                $fout = $fout . "Je hebt geen geldig e-mailadres ingevuld.<br>";
+            }
+
+            // controle op het aantal tickets
+            if ($aantal < 1 || $aantal > $maxTickets) {
+                $fout = $fout . "Je kunt minimaal 1 en maximaal " . $maxTickets . " tickets per bestelling bestellen.<br>";
+            }
+
+            if ($fout != "") {
+                // er is iets fout, dus de foutmelding laten zien
+                echo "<h3>Er ging iets mis met je bestelling</h3>";
+                echo "<p>" . $fout . "</p>";
+                echo "<a href='index.php'>Terug naar het bestelformulier</a>";
+            } else {
+                // kijken welk soort ticket er gekozen is
+                if ($soort == "vip") {
+                    $prijs = $vipPrijs;
+                    $soortTekst = "VIP tickets";
+                } else {
+                    $prijs = $normaalPrijs;
+                    $soortTekst = "tickets";
+                }
+
+                // totaalprijs uitrekenen met de functie
+                $totaal = berekenTotaal($aantal, $prijs);
+
+                echo "<h3>Bedankt voor je aankoop</h3>";
+                echo "<p>" . begroeting($naam) . ", bedankt voor je bestelling van " . $aantal . " " . $soortTekst . " voor U2!</p>";
+                echo "<p>Totaal prijs = <b>&euro;" . $totaal . "</b></p>";
+                echo "<hr>";
+            }
+        } else {
+            // de pagina is geopend zonder het formulier in te vullen
+            echo "<h3>Je hebt nog niks besteld</h3>";
+            echo "<a href='index.php'>Naar het bestelformulier</a>";
         }
         ?>
     </main>

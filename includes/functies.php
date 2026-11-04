@@ -19,4 +19,14 @@ function begroeting($naam)
     return "Beste " . $naam;
 }
 
+// kijkt of het e-mailadres goed is
+function controleerEmail($email)
+{
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 ?>
