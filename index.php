@@ -10,7 +10,6 @@
     </header>
 
     <main>
-        <!-- formulier om tickets te bestellen -->
         <form method="POST" action="bestelling.php">
 
             <label for="name">Naam: </label><br>
@@ -21,7 +20,6 @@
             <input type="email" id="mail" name="mail" placeholder="email" required>
             <br><br>
 
-            <!-- kiezen tussen een normaal ticket of een VIP ticket -->
             <label for="ticketSoort">Soort ticket: </label><br>
             <select id="ticketSoort" name="ticketSoort">
                 <option value="normaal">Normaal ticket - &euro;85</option>
